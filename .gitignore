@@ -19,3 +19,8 @@
 
 # Go workspace file
 go.work
+*.code-workspace
+*.txt
+*.enc
+*.DS_Store
+out/
