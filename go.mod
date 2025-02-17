@@ -6,7 +6,7 @@ require modernc.org/tk9.0 v0.60.2
 
 require (
 	github.com/adrg/xdg v0.5.3 // indirect
-	github.com/darshanags/secure-files-go v0.3.1 // indirect
+	github.com/darshanags/secure-files-go v0.4.0 // indirect
 	github.com/disintegration/imaging v1.6.2 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/ebitengine/purego v0.8.2 // indirect

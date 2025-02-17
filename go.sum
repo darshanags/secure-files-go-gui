@@ -12,6 +12,8 @@ github.com/darshanags/secure-files-go v0.3.0 h1:Mwver18xUiY2XpJq2zon+GzNRGnCZzNU
 github.com/darshanags/secure-files-go v0.3.0/go.mod h1:l0YHrvWJ11pCBH44MCu1ONn5Izf4aDf5E2bSAjvYAIo=
 github.com/darshanags/secure-files-go v0.3.1 h1:5koYYgeaqis4lSnjWLFYFpWCGfRKYhng5IkMcQsVdvk=
 github.com/darshanags/secure-files-go v0.3.1/go.mod h1:l0YHrvWJ11pCBH44MCu1ONn5Izf4aDf5E2bSAjvYAIo=
+github.com/darshanags/secure-files-go v0.4.0 h1:ZDszaYDQxlNgDw6+koDUlyzk7Oh4xYGr++TxnzZjVRw=
+github.com/darshanags/secure-files-go v0.4.0/go.mod h1:l0YHrvWJ11pCBH44MCu1ONn5Izf4aDf5E2bSAjvYAIo=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/disintegration/imaging v1.6.2 h1:w1LecBlG2Lnp8B3jk5zSuNqd7b4DXhcjwek1ei82L+c=

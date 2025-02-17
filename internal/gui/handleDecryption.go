@@ -4,6 +4,12 @@ import tk "modernc.org/tk9.0"
 
 func (me *App) onDecryptButton() {
 	var msg Msg
+	var btnState string = me.decryptButton.State()
+
+	if btnState == "disabled" {
+		return
+	}
+
 	message, err := handleActions("dec", me.inputFilePath, me.passwordField.Textvariable())
 
 	if err != nil {
