@@ -2,11 +2,11 @@ module github.com/darshanags/secure-files-go-gui
 
 go 1.23.6
 
-require modernc.org/tk9.0 v0.60.2
+require modernc.org/tk9.0 v0.62.1
 
 require (
 	github.com/adrg/xdg v0.5.3 // indirect
-	github.com/darshanags/secure-files-go v0.4.0 // indirect
+	github.com/darshanags/secure-files-go v0.5.1 // indirect
 	github.com/disintegration/imaging v1.6.2 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/ebitengine/purego v0.8.2 // indirect
@@ -40,7 +40,7 @@ require (
 	modernc.org/libfreetype v0.9.17 // indirect
 	modernc.org/libmd v0.12.16 // indirect
 	modernc.org/libtcl9.0 v0.15.1 // indirect
-	modernc.org/libtk9.0 v0.14.0 // indirect
+	modernc.org/libtk9.0 v0.15.0 // indirect
 	modernc.org/libxcb v0.11.3 // indirect
 	modernc.org/libz v0.16.14 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
@@ -50,6 +50,6 @@ require (
 	modernc.org/regexp v1.7.8 // indirect
 	modernc.org/sortutil v1.2.1 // indirect
 	modernc.org/strutil v1.2.1 // indirect
-	modernc.org/tcl9.0 v0.15.19 // indirect
+	modernc.org/tcl9.0 v0.15.25 // indirect
 	modernc.org/token v1.1.0 // indirect
 )

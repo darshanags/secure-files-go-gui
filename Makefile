@@ -14,3 +14,4 @@ clean:
 	rm -rf out/bin/${BINARY_NAME}-darwin_arm64
 	rm -rf out/bin/${BINARY_NAME}-linux_amd64
 	rm -rf out/bin/${BINARY_NAME}-win_amd64.exe
+	rm -rf test_files/*.enc

@@ -2,38 +2,62 @@ package gui
 
 import (
 	"errors"
+	"path/filepath"
+	"sync"
 
 	"github.com/darshanags/secure-files-go/pkg/appparser"
 	decryptfile "github.com/darshanags/secure-files-go/pkg/decryptFile"
 	encryptfile "github.com/darshanags/secure-files-go/pkg/encryptFile"
 	"github.com/darshanags/secure-files-go/pkg/kdf"
+	"github.com/darshanags/secure-files-go/pkg/utilities"
 )
 
-func handleActions(directive string, iF string, pass string) (string, error) {
-	message := ""
-
-	if len(iF) < 1 {
-		return message, errors.New("input file is invalid")
-	}
+func (me *App) handleActions(directive string, iF []string, pass string) error {
+	var (
+		wg         sync.WaitGroup
+		outputPath string
+	)
 
 	if len(pass) < 8 {
-		return message, errors.New("password needs to be at least 8 characters long")
+		return errors.New("password needs to be at least 8 characters long")
 	}
+
+	me.activeCh = make(chan utilities.AsyncResult, len(iF))
 
 	switch directive {
 	case "enc":
-		salt, key := kdf.Kdf(pass, nil)
-		outputPath := appparser.GetOutputPath(directive, iF)
+		for _, inputFile := range iF {
+			salt, key := kdf.Kdf(pass, nil)
+			outputPath = appparser.GetOutputPath(directive, inputFile)
 
-		message, err := encryptfile.EncryptFile(iF, outputPath, key, salt)
+			file := &encryptfile.LocalFileInfo{
+				InputFilename:  filepath.Base(inputFile),
+				InputPath:      inputFile,
+				OutputFilename: filepath.Base(outputPath),
+				OutputPath:     outputPath,
+			}
 
-		return message, err
-
+			go file.EncryptFileAsync(key, salt, &wg, me.activeCh)
+			wg.Add(1)
+		}
 	case "dec":
-		outputPath := appparser.GetOutputPath(directive, iF)
-		message, err := decryptfile.DecryptFile(iF, outputPath, pass)
-		return message, err
+		for _, inputFile := range iF {
+			outputPath = appparser.GetOutputPath(directive, inputFile)
+
+			file := &decryptfile.LocalFileInfo{
+				InputFilename:  filepath.Base(inputFile),
+				InputPath:      inputFile,
+				OutputFilename: filepath.Base(outputPath),
+				OutputPath:     outputPath,
+			}
+
+			go file.DecryptFileAsync(pass, &wg, me.activeCh)
+			wg.Add(1)
+		}
 	default:
-		return message, errors.New("invalid directive")
+		return errors.New("invalid directive")
 	}
+
+	return nil
+
 }

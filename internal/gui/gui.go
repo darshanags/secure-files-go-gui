@@ -1,6 +1,11 @@
 package gui
 
 import (
+	"fmt"
+	"log"
+	"time"
+
+	"github.com/darshanags/secure-files-go/pkg/utilities"
 	tk "modernc.org/tk9.0"
 	_ "modernc.org/tk9.0/themes/azure"
 )
@@ -15,7 +20,8 @@ type App struct {
 	fileSelectLabel  *tk.LabelWidget
 	passwordLabel    *tk.LabelWidget
 	infoAreaLabel    *tk.LabelWidget
-	inputFilePath    string
+	inputFilePath    []string
+	activeCh         chan utilities.AsyncResult
 }
 
 func NewApp(appName string) *App {
@@ -26,6 +32,7 @@ func NewApp(appName string) *App {
 	app.makeWidgets()
 	app.makeLayout()
 	app.makeBindings()
+	app.startTicker()
 	return app
 }
 
@@ -87,6 +94,42 @@ func (me *App) makeBindings() {
 	tk.Bind(me.decryptButton, "<ButtonRelease>", tk.Command(me.onDecryptButton))
 	tk.Bind(tk.App, "<Escape>", tk.Command(me.onQuit))
 	tk.Bind(me.exitButton, "<ButtonRelease>", tk.Command(me.onQuit))
+}
+
+func (me *App) startTicker() *tk.Ticker {
+
+	ticker, err := tk.NewTicker(100*time.Millisecond, me.tick)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return ticker
+}
+
+func (me *App) tick() {
+	var msg Msg
+
+	select {
+	case result, ok := <-me.activeCh:
+		if !ok {
+			fmt.Println("Channel is closed")
+			return
+		}
+		if result.Error != nil {
+			msg.mType = "error"
+			msg.msg = result.Error.Error()
+			me.updateInfo(msg, true)
+		} else {
+			me.passwordField.Configure(tk.Textvariable(""))
+			msg.mType = "success"
+			msg.msg = result.Message
+			me.updateInfo(msg, true)
+		}
+	default:
+		// No value available in the channel
+	}
+
 }
 
 func (me *App) Run() {
