@@ -12,21 +12,27 @@ type Msg struct {
 	msg   string
 }
 
-func updateInfo(iA *tk.TextWidget, m Msg, append bool) error {
-	iA.Configure(tk.State("normal"))
+func (me *App) updateInfo(m Msg, append bool) error {
+	me.infoArea.Configure(tk.State("normal"))
 	if !append {
-		iA.Clear()
+		me.infoArea.Clear()
+	}
+	if m.mType == "" {
+		m.mType = "info"
 	}
 	switch m.mType {
 	case "error":
-		iA.TagConfigure("error", tk.Foreground(tk.Red))
-		iA.InsertML(fmt.Sprintf(`%s %s%s%s`, GetTimestamp(), `<error>`, m.msg, `</error><br/>`))
-	case "msg":
-		iA.InsertML(fmt.Sprintf(`%s %s`, GetTimestamp(), m.msg+`<br/>`))
+		me.infoArea.TagConfigure("error", tk.Foreground(tk.Red))
+		me.infoArea.InsertML(fmt.Sprintf(`%s %s%s%s`, GetTimestamp(), `<error>`, m.msg, `</error><br/>`))
+	case "success":
+		me.infoArea.TagConfigure("success", tk.Foreground(tk.Green))
+		me.infoArea.InsertML(fmt.Sprintf(`%s %s%s%s`, GetTimestamp(), `<success>`, m.msg, `</success><br/>`))
+	case "info":
+		me.infoArea.InsertML(fmt.Sprintf(`%s %s`, GetTimestamp(), m.msg+`<br/>`))
 	default:
 		return errors.New("the msg parameter is invalid")
 	}
-	iA.Configure(tk.State("disabled"))
+	me.infoArea.Configure(tk.State("disabled"))
 
 	return nil
 }
