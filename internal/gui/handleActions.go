@@ -10,6 +10,7 @@ import (
 	encryptfile "github.com/darshanags/secure-files-go/pkg/encryptFile"
 	"github.com/darshanags/secure-files-go/pkg/kdf"
 	"github.com/darshanags/secure-files-go/pkg/utilities"
+	tk "modernc.org/tk9.0"
 )
 
 func (me *App) handleActions(directive string, iF []string, pass string) error {
@@ -19,6 +20,7 @@ func (me *App) handleActions(directive string, iF []string, pass string) error {
 	)
 
 	if len(pass) < 8 {
+		tk.Focus(me.passwordField)
 		return errors.New("password needs to be at least 8 characters long")
 	}
 

@@ -1,6 +1,7 @@
 package gui
 
 import (
+	_ "embed"
 	"fmt"
 	"log"
 	"time"
@@ -9,6 +10,14 @@ import (
 	tk "modernc.org/tk9.0"
 	_ "modernc.org/tk9.0/themes/azure"
 )
+
+//go:embed assets/encrypted.svg
+var Icon string
+
+type inputFiles struct {
+	inputFilePaths []string
+	selected       bool
+}
 
 type App struct {
 	passwordField    *tk.TEntryWidget
@@ -20,13 +29,17 @@ type App struct {
 	fileSelectLabel  *tk.LabelWidget
 	passwordLabel    *tk.LabelWidget
 	infoAreaLabel    *tk.LabelWidget
-	inputFilePath    []string
+	inputFiles       inputFiles
 	activeCh         chan utilities.AsyncResult
+	lang             *Lang
 }
 
 func NewApp(appName string) *App {
 	app := &App{}
+	app.lang = &Lang{}
+	app.lang.init()
 	tk.ActivateTheme("azure light")
+	tk.App.IconPhoto(tk.NewPhoto(tk.Data(Icon)))
 	tk.App.WmTitle(appName)
 	tk.WmProtocol(tk.App, tk.WM_DELETE_WINDOW, app.onQuit)
 	app.makeWidgets()
@@ -43,23 +56,23 @@ func (me *App) makeWidgets() {
 }
 
 func (me *App) makeUserInputs() {
-	me.fileSelectLabel = tk.Label(tk.Anchor("w"), tk.Txt("Select File: "))
-	me.filePickerButton = tk.TButton(tk.Txt("Select File..."))
-	me.passwordLabel = tk.Label(tk.Anchor("w"), tk.Txt("Password: "))
+	me.fileSelectLabel = tk.Label(tk.Anchor("w"), tk.Txt(me.lang.get("file_select_label")))
+	me.filePickerButton = tk.TButton(tk.Txt(me.lang.get("file_select_btn")))
+	me.passwordLabel = tk.Label(tk.Anchor("w"), tk.Txt(me.lang.get("password_label")))
 	me.passwordField = tk.TEntry(tk.Justify("left"), tk.Show("*"), tk.Textvariable(""))
 }
 
 func (me *App) makeInfoArea() {
-	me.infoAreaLabel = tk.Label(tk.Anchor("w"), tk.Txt("Log:"))
+	me.infoAreaLabel = tk.Label(tk.Anchor("w"), tk.Txt(me.lang.get("info_area_label")))
 	me.infoArea = tk.Text(tk.Font(tk.CourierFont(), 10),
 		tk.State("disabled"), tk.Setgrid(true), tk.Undo(false),
 		tk.Wrap("word"), tk.Relief("sunken"), tk.Borderwidth(1))
 }
 
 func (me *App) makeActionButtons() {
-	me.encryptButton = tk.TButton(tk.Txt("Encrypt File"))
-	me.decryptButton = tk.TButton(tk.Txt("Decrypt File"), tk.State("disabled"))
-	me.exitButton = tk.TButton(tk.Txt("Exit"))
+	me.encryptButton = tk.TButton(tk.Txt(me.lang.get("encrypt_btn")))
+	me.decryptButton = tk.TButton(tk.Txt(me.lang.get("decrypt_btn")))
+	me.exitButton = tk.TButton(tk.Txt(me.lang.get("exit_btn")))
 }
 
 func (me *App) makeLayout() {
@@ -122,6 +135,12 @@ func (me *App) tick() {
 			me.updateInfo(msg, true)
 		} else {
 			me.passwordField.Configure(tk.Textvariable(""))
+			me.inputFiles.inputFilePaths = nil
+			me.inputFiles.selected = false
+			me.decryptButton.Configure(tk.Txt(me.lang.get("decrypt_btn")))
+			me.encryptButton.Configure(tk.Txt(me.lang.get("encrypt_btn")))
+			me.filePickerButton.Configure(tk.Txt(me.lang.get("file_select_btn")))
+
 			msg.mType = "success"
 			msg.msg = result.Message
 			me.updateInfo(msg, true)
