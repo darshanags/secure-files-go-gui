@@ -6,6 +6,9 @@ This implements [RFC8439](https://datatracker.ietf.org/doc/html/rfc8439) which u
 
 **This is in no shape or form a well-polished program, so use at your own risk.**
 
+## Binaries
+The latest binaries can be found under the [Releases](https://github.com/darshanags/secure-files-go-gui/releases) section.
+
 ## Screenshots
 ### Main window
 <img width="792" alt="Main window" src="https://github.com/user-attachments/assets/0a0383b2-4189-4ba5-a7cd-6859ee10dcfb" />
