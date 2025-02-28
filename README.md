@@ -6,6 +6,19 @@ This implements [RFC8439](https://datatracker.ietf.org/doc/html/rfc8439) which u
 
 **This is in no shape or form a well-polished program, so use at your own risk.**
 
+## Screenshots
+### Main window
+<img width="792" alt="Main window" src="https://github.com/user-attachments/assets/0a0383b2-4189-4ba5-a7cd-6859ee10dcfb" />
+
+### How errors are presented
+<img width="792" alt="How errors are presented" src="https://github.com/user-attachments/assets/01a6dfbf-c6a1-4d0a-9514-9fc4de3dcb04" />
+
+### File encryption
+<img width="792" alt="File encryption" src="https://github.com/user-attachments/assets/fd1df49d-bd67-4a88-982c-a5eb39af5532" />
+
+### File decryption
+<img width="792" alt="File decryption" src="https://github.com/user-attachments/assets/98f46b9f-636a-4c94-90a8-1146faf3718a" />
+
 ## Program Flow
 ### Encryption
 ```mermaid
