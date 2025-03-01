@@ -7,6 +7,7 @@ type Lang struct {
 func (lang *Lang) init() {
 	lang.Strings = make(map[string]string)
 	lang.Strings["file_select_label"] = "Select File:"
+	lang.Strings["file_select_title"] = "Select Files"
 	lang.Strings["file_select_btn"] = "Select Files"
 	lang.Strings["file_select_btn_selected"] = "%d Files Selected"
 	lang.Strings["password_label"] = "Password:"
