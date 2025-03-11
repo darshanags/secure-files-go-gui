@@ -2,7 +2,6 @@ package gui
 
 import (
 	_ "embed"
-	"fmt"
 	"log"
 	"time"
 
@@ -126,7 +125,7 @@ func (me *App) tick() {
 	select {
 	case result, ok := <-me.activeCh:
 		if !ok {
-			fmt.Println("Channel is closed")
+			log.Println("Channel is closed")
 			return
 		}
 		if result.Error != nil {
