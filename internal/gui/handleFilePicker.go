@@ -11,7 +11,8 @@ func (me *App) onFilePick() {
 		msg        Msg
 		noSelFiles int
 	)
-	me.inputFiles.inputFilePaths = extractFilePaths(tk.GetOpenFile(tk.Title(me.lang.get("file_select_title")), tk.Multiple(true)))
+
+	me.inputFiles.inputFilePaths = tk.GetOpenFile(tk.Title(me.lang.get("file_select_title")), tk.Multiple(true))
 	noSelFiles = len(me.inputFiles.inputFilePaths)
 	me.filePickerButton.Configure(tk.Txt(fmt.Sprintf(me.lang.get("file_select_btn_selected"), noSelFiles)))
 	me.inputFiles.selected = true

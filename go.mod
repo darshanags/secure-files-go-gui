@@ -2,7 +2,7 @@ module github.com/darshanags/secure-files-go-gui
 
 go 1.23.6
 
-require modernc.org/tk9.0 v0.62.1
+require modernc.org/tk9.0 v0.63.0
 
 require (
 	github.com/adrg/xdg v0.5.3 // indirect
