@@ -9,9 +9,15 @@ build:
 	mkdir -p ${BIN_PATH}
 	GOARCH=arm64 GOOS=darwin go build -o ${BIN_PATH}/${BINARY_MACOS} .
 	GOARCH=amd64 GOOS=linux go build -o ${BIN_PATH}/${BINARY_LINUX} .
-	GOARCH=amd64 GOOS=windows go build -o ${BIN_PATH}/${BINARY_WIN} .
+	GOARCH=amd64 GOOS=windows go build -ldflags="-H=windowsgui" -o ${BIN_PATH}/${BINARY_WIN} .
 
 clean:
 	go clean
 	rm -rf ${OUT_PATH}/*
 	rm -rf test_files/*.enc
+
+update:
+	go get -u ./...
+	
+list:
+	go list -m all

@@ -10,7 +10,7 @@ import (
 	_ "modernc.org/tk9.0/themes/azure"
 )
 
-//go:embed assets/encrypted.svg
+//go:embed assets/app-icon.svg
 var Icon string
 
 type inputFiles struct {
