@@ -7,12 +7,17 @@ BIN_PATH=${OUT_PATH}/bin
 
 build:
 	mkdir -p ${BIN_PATH}
-	GOARCH=arm64 GOOS=darwin go build -o ${BIN_PATH}/${BINARY_MACOS} .
-	GOARCH=amd64 GOOS=linux go build -o ${BIN_PATH}/${BINARY_LINUX} .
-	GOARCH=amd64 GOOS=windows go build -ldflags="-H=windowsgui" -o ${BIN_PATH}/${BINARY_WIN} .
+	GOARCH=arm64 GOOS=darwin go build -tags desktop,production -ldflags "-s -w" -o ${BIN_PATH}/${BINARY_MACOS} .
+	GOARCH=amd64 GOOS=linux go build -tags desktop,production -ldflags "-s -w" -o ${BIN_PATH}/${BINARY_LINUX} .
+	GOARCH=amd64 GOOS=windows go build -tags desktop,production -ldflags="-s -w -H=windowsgui" -o ${BIN_PATH}/${BINARY_WIN} .
+
+buildnew:
+	make clean
+	make build
+	./app_builder.sh
 
 clean:
-	go clean
+	go clean -x
 	rm -rf ${OUT_PATH}/*
 	rm -rf test_files/*.enc
 
